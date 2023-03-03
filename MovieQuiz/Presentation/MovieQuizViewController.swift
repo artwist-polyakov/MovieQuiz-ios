@@ -72,7 +72,7 @@ final class MovieQuizViewController: UIViewController {
 
     
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
-        print("Я нажата: ДА")
+//        print("Я нажата: ДА")
         
         let currentQuestion = questions[currentQuestionIndex]
         let givenAnswer = true
@@ -80,7 +80,7 @@ final class MovieQuizViewController: UIViewController {
     }
     
     @IBAction private func noButtonClicked(_ sender: UIButton) {
-        print("Я нажата: НЕТ")
+//        print("Я нажата: НЕТ")
         
         let currentQuestion = questions[currentQuestionIndex]
         let givenAnswer = false
