@@ -128,11 +128,15 @@ final class MovieQuizViewController: UIViewController {
     private func makeButtonsInactive() {
         yesButton.isEnabled = false
         noButton.isEnabled = false
+        yesButton.setTitleColor(UIColor.ypGray, for: .normal)
+        noButton.setTitleColor(UIColor.ypGray, for: .normal)
     }
     
     private func makeButtonsActive() {
         yesButton.isEnabled = true
         noButton.isEnabled = true
+        yesButton.setTitleColor(UIColor.black, for: .normal)
+        noButton.setTitleColor(UIColor.black, for: .normal)
     }
     
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
@@ -150,9 +154,9 @@ final class MovieQuizViewController: UIViewController {
         makeButtonsInactive()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
 //            self.imageView.layer.masksToBounds = false
-            self.imageView.layer.borderWidth = 0
+//            self.imageView.layer.borderWidth = 0
+            self.imageView.layer.borderColor = UIColor.clear.cgColor
             self.makeButtonsActive()
-            
             self.showNextQuestionOrResults()
         }
     }
