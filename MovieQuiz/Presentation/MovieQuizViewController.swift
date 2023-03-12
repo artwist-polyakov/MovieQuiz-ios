@@ -4,19 +4,9 @@ final class MovieQuizViewController: UIViewController {
     
 
     
-    // для состояния "Вопрос задан"
-    private struct QuizStepViewModel {
-      let image: UIImage
-      let question: String
-      let questionNumber: String
-    }
 
-    // для состояния "Результат квиза"
-    private struct QuizResultsViewModel {
-      let title: String
-      let text: String
-      let buttonText: String
-    }
+
+
     private var currentQuestionIndex: Int = 0
     private var correctAnswers: Int = 0
     

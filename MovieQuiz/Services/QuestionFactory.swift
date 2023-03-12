@@ -7,11 +7,7 @@
 
 import Foundation
 class QuestionFactory {
-    private struct QuizQuestion {
-      let image: String
-      let text: String
-      let correctAnswer: Bool
-    }
+
     private let questions: [QuizQuestion] = [
         QuizQuestion(
             image: "The Godfather",
