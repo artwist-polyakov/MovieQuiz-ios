@@ -104,13 +104,13 @@ final class MovieQuizViewController: UIViewController {
             let text = correctAnswers == questionsAmount ?
                     "Поздравляем, Вы ответили на 10 из 10!" :
                     "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
+            self.show(quiz: QuizResultsViewModel(title: "Результаты", text: text, buttonText: "Сыграть еще раз"))
       } else {
         currentQuestionIndex += 1 // увеличиваем индекс текущего урока на 1; таким образом мы сможем получить следующий урок
         // показать следующий вопрос
           if let nextQuestion = questionFactory.requestNextQuestion() {
               currentQuestion = nextQuestion
               let viewModel = convert(model: nextQuestion)
-              
               show(quiz: viewModel)
           }
       }
