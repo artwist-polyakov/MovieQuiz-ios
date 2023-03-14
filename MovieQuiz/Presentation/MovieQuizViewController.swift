@@ -41,19 +41,23 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     }
 
     private func show(quiz result: QuizResultsViewModel) {
-      // здесь мы показываем результат прохождения квиза
-        let alert = UIAlertController(title: result.title,
-                                      message: result.text,
-                                      preferredStyle: .alert)
-        let action = UIAlertAction(title: result.buttonText,
-                                   style: .default) {[weak self] _ in
-            guard let self = self else { return }
+//        let action = {
+//            self.currentQuestionIndex = 0
+//            self.correctAnswers = 0
+//            self.questionFactory?.requestNextQuestion()
+//        }
+        
+        let action =  {
             self.currentQuestionIndex = 0
             self.correctAnswers = 0
+            self.imageView.layer.borderWidth = 0
             self.questionFactory?.requestNextQuestion()
-        }
-        alert.addAction(action)
-        self.present(alert, animated: true, completion: nil)
+            }
+        
+      // здесь мы показываем результат прохождения квиза
+        let alert: AlertPresenter = AlertPresenter(title: result.title, message: result.text,
+                                                   buttonText: result.buttonText, completion: action)
+        alert.show(viewController: self)
     }
     
     private func makeButtonsInactive() {
