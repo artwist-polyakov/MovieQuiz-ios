@@ -117,6 +117,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
+//        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!)
+        var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileName = "inception.json"
+        documentsURL.appendPathComponent(fileName)
+        let jsonString = try? String(contentsOf: documentsURL)
+        print(jsonString ?? "Нет данных")
         super.viewDidLoad()
         imageView.layer.cornerRadius = 20
         questionFactory = QuestionFactory(delegate: self)
