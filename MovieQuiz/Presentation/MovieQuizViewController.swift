@@ -6,7 +6,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     private var currentQuestion: QuizQuestion?
     private var currentQuestionIndex: Int = 0
     private var correctAnswers: Int = 0
-    
+    private var statisticService: StatisticService
     
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
 //        print("Я нажата: ДА")
@@ -100,9 +100,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questionsAmount - 1 {
-            let text = correctAnswers == questionsAmount ?
-                    "Поздравляем, Вы ответили на 10 из 10!" :
-                    "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
+            let text = StatisticService().store(correct: correctAnswers, total: questionsAmount)//correctAnswers == questionsAmount ?
+//                    "Поздравляем, Вы ответили на 10 из 10!" :
+//                    "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
             self.show(quiz: QuizResultsViewModel(title: "Результаты", text: text, buttonText: "Сыграть еще раз"))
       } else {
         currentQuestionIndex += 1 // увеличиваем индекс текущего урока на 1; таким образом мы сможем получить следующий урок
@@ -117,12 +117,30 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
+        var statisticService = StatisticServiceImplementation()
 //        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!)
-        var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let fileName = "inception.json"
-        documentsURL.appendPathComponent(fileName)
-        let jsonString = try? String(contentsOf: documentsURL)
-        print(jsonString ?? "Нет данных")
+//        var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+//        let fileName = "inception.json"
+//        documentsURL.appendPathComponent(fileName)
+//        let jsonString = try? String(contentsOf: documentsURL)
+//        let data = jsonString?.data(using: .utf8)!
+//        do {
+//            let json = try JSONSerialization.jsonObject(with: (data)!, options: []) as? [String: Any]
+//            print(json!)
+//            let title = json?["title"]
+//            let year = json?["year"]
+//            let actorList = json?["actorList"] as! [Any]
+//            print("Название \(title), год: \(year)")
+//            for actor in actorList {
+//                if let actor = actor as? [String: Any] {
+//                    print(actor["asCharacter"])
+//                }
+//            }
+//        } catch {
+//            print("Failed to parse: \(String(describing: jsonString))")
+//        }
+//
+//        print(jsonString ?? "Нет данных")
         super.viewDidLoad()
         imageView.layer.cornerRadius = 20
         questionFactory = QuestionFactory(delegate: self)
