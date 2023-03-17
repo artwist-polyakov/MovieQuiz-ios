@@ -7,7 +7,7 @@
 
 import Foundation
 protocol StatisticService {
-    func store(correct count: Int, total amount: Int) -> String
+    func store(correct count: Int, total amount: Int)
     var totalAccuracy: Double { get }
     var gamesCount: Int { get }
     var bestGame: GameRecord { get }
@@ -31,7 +31,7 @@ struct GameRecord: Codable {
 }
 
 final class StatisticServiceImplementation: StatisticService {
-        func store(correct count: Int, total amount: Int) -> String {
+        func store(correct count: Int, total amount: Int) {
         let oldGamesCount = self.gamesCount
         let newTotalAccuracy:Double = (Double(oldGamesCount*amount)*self.totalAccuracy+Double(count))/Double(amount*(oldGamesCount+1))
         let newGamesCount:Int = oldGamesCount+1
@@ -41,9 +41,8 @@ final class StatisticServiceImplementation: StatisticService {
         userDefaults.set(newGamesCount, forKey: Keys.gamesCount.rawValue)
         userDefaults.set(try! JSONEncoder().encode(newBestGame), forKey: Keys.bestGame.rawValue)
         
-        let returnString:String = "Ваш результат:\(count)/\(amount)\nКоличество сыгранных квизов:\(newGamesCount)\nРекорд: \(newBestGame.correct)/\(newBestGame.total) (\(newBestGame.date.dateTimeString))\nСредняя точность: \(String(format: "%.2f%%", 100*newTotalAccuracy))"
         
-        return returnString
+        
     }
     
     private let userDefaults = UserDefaults.standard

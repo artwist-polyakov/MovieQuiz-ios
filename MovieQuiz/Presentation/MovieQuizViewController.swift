@@ -6,7 +6,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     private var currentQuestion: QuizQuestion?
     private var currentQuestionIndex: Int = 0
     private var correctAnswers: Int = 0
-//    private var statisticService: StatisticService
+    private var statisticService: StatisticService?
     
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
 //        print("Я нажата: ДА")
@@ -100,7 +100,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questionsAmount - 1 {
-            let text = StatisticServiceImplementation().store(correct: correctAnswers, total: questionsAmount)
+            statisticService!.store(correct: correctAnswers, total: questionsAmount)
+            
+            let text = "Ваш результат:\(correctAnswers)/\(questionsAmount)\nКоличество сыгранных квизов:\(statisticService!.gamesCount)\nРекорд: \(statisticService!.bestGame.correct)/\(statisticService!.bestGame.total) (\(statisticService!.bestGame.date.dateTimeString))\nСредняя точность: \(String(format: "%.2f%%", 100*statisticService!.totalAccuracy))"
+            
+//            let text = StatisticServiceImplementation().store(correct: correctAnswers, total: questionsAmount)
 //            correctAnswers == questionsAmount ?
 //                    "Поздравляем, Вы ответили на 10 из 10!" :
 //                    "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
@@ -118,7 +122,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
-        print(NSHomeDirectory()) 
+//        print(NSHomeDirectory())
 //        var statisticService = StatisticServiceImplementation()
 //        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!)
 //        var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -147,6 +151,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
         imageView.layer.cornerRadius = 20
         questionFactory = QuestionFactory(delegate: self)
         questionFactory?.requestNextQuestion()
+        statisticService = StatisticServiceImplementation()
         
         
     }
