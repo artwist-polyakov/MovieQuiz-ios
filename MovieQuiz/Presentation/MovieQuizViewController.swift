@@ -6,7 +6,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     private var currentQuestion: QuizQuestion?
     private var currentQuestionIndex: Int = 0
     private var correctAnswers: Int = 0
-    private var statisticService: StatisticService
+//    private var statisticService: StatisticService
     
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
 //        print("Я нажата: ДА")
@@ -100,7 +100,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questionsAmount - 1 {
-            let text = StatisticService().store(correct: correctAnswers, total: questionsAmount)//correctAnswers == questionsAmount ?
+            let text = StatisticServiceImplementation().store(correct: correctAnswers, total: questionsAmount)//correctAnswers == questionsAmount ?
 //                    "Поздравляем, Вы ответили на 10 из 10!" :
 //                    "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
             self.show(quiz: QuizResultsViewModel(title: "Результаты", text: text, buttonText: "Сыграть еще раз"))
@@ -117,7 +117,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
-        var statisticService = StatisticServiceImplementation()
+        print(NSHomeDirectory()) 
+//        var statisticService = StatisticServiceImplementation()
 //        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!)
 //        var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 //        let fileName = "inception.json"
