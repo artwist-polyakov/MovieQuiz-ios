@@ -100,7 +100,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questionsAmount - 1 {
-            let text = StatisticServiceImplementation().store(correct: correctAnswers, total: questionsAmount)//correctAnswers == questionsAmount ?
+            let text = StatisticServiceImplementation().store(correct: correctAnswers, total: questionsAmount)
+//            correctAnswers == questionsAmount ?
 //                    "Поздравляем, Вы ответили на 10 из 10!" :
 //                    "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
             self.show(quiz: QuizResultsViewModel(title: "Результаты", text: text, buttonText: "Сыграть еще раз"))
