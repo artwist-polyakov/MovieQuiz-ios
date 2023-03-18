@@ -5,10 +5,10 @@
 //  Created by Александр Поляков on 14.03.2023.
 //
 
-import Foundation
+
 import UIKit
-class AlertPresenter {
-    let alert: AlertModel
+final class AlertPresenter {
+    private let alert: AlertModel
 
     init(title: String, message:String,buttonText:String,completion: @escaping (()->())) {
 

@@ -27,11 +27,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
         showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
     }
     
-    @IBOutlet weak var yesButton: UIButton!
-    @IBOutlet weak var noButton: UIButton!
-    @IBOutlet private var imageView: UIImageView!
-    @IBOutlet private var textLabel: UILabel!
-    @IBOutlet private var counterLabel: UILabel!
+    @IBOutlet private weak var yesButton: UIButton!
+    @IBOutlet private weak var noButton: UIButton!
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var textLabel: UILabel!
+    @IBOutlet private weak var counterLabel: UILabel!
     
     private func show(quiz step: QuizStepViewModel) {
         imageView.image = step.image
@@ -123,30 +123,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     // MARK: - Lifecycle
     override func viewDidLoad() {
 //        print(NSHomeDirectory())
-//        var statisticService = StatisticServiceImplementation()
-//        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!)
-//        var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-//        let fileName = "inception.json"
-//        documentsURL.appendPathComponent(fileName)
-//        let jsonString = try? String(contentsOf: documentsURL)
-//        let data = jsonString?.data(using: .utf8)!
-//        do {
-//            let json = try JSONSerialization.jsonObject(with: (data)!, options: []) as? [String: Any]
-//            print(json!)
-//            let title = json?["title"]
-//            let year = json?["year"]
-//            let actorList = json?["actorList"] as! [Any]
-//            print("Название \(title), год: \(year)")
-//            for actor in actorList {
-//                if let actor = actor as? [String: Any] {
-//                    print(actor["asCharacter"])
-//                }
-//            }
-//        } catch {
-//            print("Failed to parse: \(String(describing: jsonString))")
-//        }
-//
-//        print(jsonString ?? "Нет данных")
         super.viewDidLoad()
         imageView.layer.cornerRadius = 20
         questionFactory = QuestionFactory(delegate: self)
