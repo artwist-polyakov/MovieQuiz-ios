@@ -65,11 +65,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     }
 
     private func show(quiz result: QuizResultsViewModel) {
-//        let action = {
-//            self.currentQuestionIndex = 0
-//            self.correctAnswers = 0
-//            self.questionFactory?.requestNextQuestion()
-//        }
         
         let action =  {
             self.currentQuestionIndex = 0
