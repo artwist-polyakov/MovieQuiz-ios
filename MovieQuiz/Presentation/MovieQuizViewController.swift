@@ -34,11 +34,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     @IBOutlet private weak var textLabel: UILabel!
     @IBOutlet private weak var counterLabel: UILabel!
     
-    private func showLoadingIndicator() {
+    func showLoadingIndicator() {
         activityIndicator.isHidden = false // говорим, что индикатор загрузки не скрыт
         activityIndicator.startAnimating() // включаем анимацию
     }
-    private func hideLoadingIndicator() {
+    func hideLoadingIndicator() {
         activityIndicator.isHidden = true // говорим, что индикатор загрузки не скрыт
         activityIndicator.stopAnimating() // включаем анимацию
     }
@@ -182,7 +182,17 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
         // возьмём в качестве сообщения описание ошибки
     }
     
-
+    func didFailToLoadImage() {
+//        activityIndicator.isHidden = false
+        
+        let alert: AlertPresenter = AlertPresenter(title: "Ошибка", message: "Картинка не загружена",
+                                                   buttonText: "Попробовать еще раз") {[weak self] in
+            self?.questionFactory?.requestNextQuestion()
+        }
+        alert.show(viewController: self)
+    }
+        // возьмём в качестве сообщения описание ошибки
+    
     
 }
 
