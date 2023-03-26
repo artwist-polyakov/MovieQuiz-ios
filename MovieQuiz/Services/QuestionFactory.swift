@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 final class QuestionFactory:  QuestionFactoryProtocol {
     private let moviesLoader: MoviesLoading
     private weak var delegate: QuestionFactoryDelegate?
@@ -87,6 +88,8 @@ final class QuestionFactory:  QuestionFactoryProtocol {
             do {
                 imageData = try Data(contentsOf: movie.resizedImageURL)
             } catch {
+                
+                
                 print("Failed to load image")
             }
             
@@ -105,6 +108,7 @@ final class QuestionFactory:  QuestionFactoryProtocol {
             }
         }
     }
+    
         
 //        let question = questions[safe: index]
 //        delegate?.didReceiveNextQuestion(question: question)

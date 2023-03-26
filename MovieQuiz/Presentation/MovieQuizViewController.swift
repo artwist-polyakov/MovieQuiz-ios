@@ -51,11 +51,13 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
             guard let self = self else { return }
             self.currentQuestionIndex = 0
             self.correctAnswers = 0
-            self.questionFactory?.requestNextQuestion()
+            self.questionFactory?.loadData()
         }
         model.show(viewController: self)
         // создайте и покажите алерт
-    } 
+    }
+    
+
     
     private func show(quiz step: QuizStepViewModel) {
         imageView.image = step.image
@@ -175,9 +177,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     }
 
     func didFailToLoadData(with error: Error) {
+        activityIndicator.isHidden = false
         showNetworkError(message: error.localizedDescription)
         // возьмём в качестве сообщения описание ошибки
     }
+    
+
     
 }
 
