@@ -77,6 +77,7 @@ final class QuestionFactory:  QuestionFactoryProtocol {
         }
     
     func requestNextQuestion() {
+        self.delegate?.showLoadingIndicator()
         DispatchQueue.global().async { [weak self] in
             guard let self = self else { return }
             let index = (0..<self.movies.count).randomElement() ?? 0
@@ -92,12 +93,12 @@ final class QuestionFactory:  QuestionFactoryProtocol {
             } catch {
                 
                 DispatchQueue.main.async { [weak self] in
-                    self?.delegate?.showLoadingIndicator()
+//                    self?.delegate?.showLoadingIndicator()
                     self?.delegate?.didFailToLoadImage()
                     //                    print("Failed to load image")
                 }
             }
-            self.delegate?.hideLoadingIndicator()
+//            self.delegate?.hideLoadingIndicator()
             let rating = Float(movie.rating) ?? 0
             
             let text = "Рейтинг этого фильма больше чем 7?"
@@ -112,6 +113,7 @@ final class QuestionFactory:  QuestionFactoryProtocol {
                 self.delegate?.didReceiveNextQuestion(question: question)
             }
         }
+//        self.delegate?.hideLoadingIndicator()
     }
     
         

@@ -36,15 +36,15 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     
     func showLoadingIndicator() {
         activityIndicator.isHidden = false // говорим, что индикатор загрузки не скрыт
-        activityIndicator.startAnimating() // включаем анимацию
+//        activityIndicator.startAnimating() // включаем анимацию
     }
     func hideLoadingIndicator() {
         activityIndicator.isHidden = true // говорим, что индикатор загрузки не скрыт
-        activityIndicator.stopAnimating() // включаем анимацию
+//        activityIndicator.stopAnimating() // включаем анимацию
     }
     
     private func showNetworkError(message: String) {
-        hideLoadingIndicator() // скрываем индикатор загрузки
+//        hideLoadingIndicator() // скрываем индикатор загрузки
         let model = AlertPresenter(title: "Ошибка",
                                    message: message,
                                    buttonText: "Попробовать еще раз") {[weak self] in
@@ -147,11 +147,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     override func viewDidLoad() {
 //        print(NSHomeDirectory())
         super.viewDidLoad()
-        activityIndicator.isHidden = true
+        activityIndicator.startAnimating()
+//        showLoadingIndicator()
         imageView.layer.cornerRadius = 20
         statisticService = StatisticServiceImplementation()
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader() ,delegate: self)
-        showLoadingIndicator()
+//        showLoadingIndicator()
         questionFactory?.loadData()
         
         
@@ -169,15 +170,16 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
         DispatchQueue.main.async { [weak self] in
             self?.show(quiz: viewModel)
         }
+        hideLoadingIndicator()
     }
     
     func didLoadDataFromServer() {
-        activityIndicator.isHidden = true // скрываем индикатор загрузки
+//        activityIndicator.isHidden = true // скрываем индикатор загрузки
         questionFactory?.requestNextQuestion()
     }
 
     func didFailToLoadData(with error: Error) {
-        activityIndicator.isHidden = false
+//        activityIndicator.isHidden = false
         showNetworkError(message: error.localizedDescription)
         // возьмём в качестве сообщения описание ошибки
     }
