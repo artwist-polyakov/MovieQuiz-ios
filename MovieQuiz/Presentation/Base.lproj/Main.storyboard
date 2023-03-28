@@ -112,16 +112,23 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="jQZ-iC-gdC">
+                                <rect key="frame" x="188.5" y="419" width="37" height="37"/>
+                                <color key="color" name="ypBlack"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="ypBlack"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="VPW-8x-Ioh" secondAttribute="trailing" constant="20" id="CFm-vV-HDU"/>
+                            <constraint firstItem="jQZ-iC-gdC" firstAttribute="centerY" secondItem="YlI-YL-8H0" secondAttribute="centerY" id="O99-cH-M7e"/>
                             <constraint firstItem="VPW-8x-Ioh" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="a5e-Gz-Br0"/>
+                            <constraint firstItem="jQZ-iC-gdC" firstAttribute="centerX" secondItem="YlI-YL-8H0" secondAttribute="centerX" id="nr4-el-NCJ"/>
                             <constraint firstItem="VPW-8x-Ioh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="uVC-LE-TPy"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="jQZ-iC-gdC" id="vQq-Ak-IGX"/>
                         <outlet property="counterLabel" destination="pfZ-bz-Lrv" id="a56-hj-rp0"/>
                         <outlet property="imageView" destination="YlI-YL-8H0" id="saE-Ae-A7n"/>
                         <outlet property="noButton" destination="uvN-Ch-sLy" id="uGl-6X-StH"/>
