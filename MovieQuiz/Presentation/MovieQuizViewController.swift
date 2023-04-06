@@ -44,7 +44,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
         
     }
     
-    
     // MARK: - UI
     func showLoadingIndicator() {
         activityIndicator.isHidden = false // говорим, что индикатор загрузки не скрыт
