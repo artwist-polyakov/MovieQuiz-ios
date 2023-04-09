@@ -39,13 +39,12 @@ final class MovieQuizUITests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
-    
-
-    func testScreenCast() throws {
+    func testYesButton(){
+        let firstPoster = app.images["Poster"] // Находим первоначальный постер
+        app.buttons["Yes"].tap() // Находим кнопку 'Да' и нажимаем её
         
-        let button = app.buttons["Нет"].tap()
-        
-        
+        let secondPoster = app.images["Poster"] // снова находим постер
+        XCTAssertFalse(firstPoster == secondPoster) // сравниваем постеры
     }
 
 
