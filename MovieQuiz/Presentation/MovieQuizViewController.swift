@@ -72,7 +72,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     private func showNetworkError(message: String) {
         let model = AlertPresenter(title: "Ошибка",
                                    message: message,
-                                   buttonText: "Попробовать еще раз") {[weak self] in
+                                   buttonText: "Попробовать ещё раз") {[weak self] in
             guard let self = self else { return }
             self.currentQuestionIndex = 0
             self.correctAnswers = 0
@@ -140,7 +140,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
 //            correctAnswers == questionsAmount ?
 //                    "Поздравляем, Вы ответили на 10 из 10!" :
 //                    "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
-            self.show(quiz: QuizResultsViewModel(title: "Результаты", text: text, buttonText: "Сыграть еще раз"))
+            self.show(quiz: QuizResultsViewModel(title: "Результаты", text: text, buttonText: "Сыграть ещё раз"))
       } else {
         currentQuestionIndex += 1 // увеличиваем индекс текущего урока на 1; таким образом мы сможем получить следующий урок
           
@@ -177,7 +177,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     
     func didFailToLoadImage() {
         let alert: AlertPresenter = AlertPresenter(title: "Ошибка", message: "Картинка не загружена",
-                                                   buttonText: "Попробовать еще раз") {[weak self] in
+                                                   buttonText: "Попробовать ещё раз") {[weak self] in
             self?.questionFactory?.requestNextQuestion()
         }
         alert.show(viewController: self)
