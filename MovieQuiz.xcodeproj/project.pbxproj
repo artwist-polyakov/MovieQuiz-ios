@@ -33,6 +33,7 @@
 		AFE5245E29CF889D000B05C0 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE5245D29CF889D000B05C0 /* NetworkClient.swift */; };
 		AFE5246029D02FBB000B05C0 /* MostPopularMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE5245F29D02FBB000B05C0 /* MostPopularMovies.swift */; };
 		AFE5246229D030C8000B05C0 /* MoviesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE5246129D030C8000B05C0 /* MoviesLoader.swift */; };
+		AFF30D1829E746B400C3B8F0 /* MovieQuizPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF30D1729E746B400C3B8F0 /* MovieQuizPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		AFE5245D29CF889D000B05C0 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
 		AFE5245F29D02FBB000B05C0 /* MostPopularMovies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostPopularMovies.swift; sourceTree = "<group>"; };
 		AFE5246129D030C8000B05C0 /* MoviesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesLoader.swift; sourceTree = "<group>"; };
+		AFF30D1729E746B400C3B8F0 /* MovieQuizPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieQuizPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 				AD1ABAB52831907B00B3E448 /* MovieQuizViewController.swift */,
 				AD1ABAB72831907B00B3E448 /* Main.storyboard */,
 				AF4DEBF429C0DCF8001BDC8D /* AlertPresenter.swift */,
+				AFF30D1729E746B400C3B8F0 /* MovieQuizPresenter.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 				AF4DEBE929BE7BA7001BDC8D /* QuizStepViewModel.swift in Sources */,
 				AF4DEBED29BE7BC2001BDC8D /* QuizQuestion.swift in Sources */,
 				AFE5246229D030C8000B05C0 /* MoviesLoader.swift in Sources */,
+				AFF30D1829E746B400C3B8F0 /* MovieQuizPresenter.swift in Sources */,
 				AF4DEBE629BE77DA001BDC8D /* QuestionFactory.swift in Sources */,
 				AFE5246029D02FBB000B05C0 /* MostPopularMovies.swift in Sources */,
 				AD77F5742857F8810062FB14 /* Date+Extensions.swift in Sources */,

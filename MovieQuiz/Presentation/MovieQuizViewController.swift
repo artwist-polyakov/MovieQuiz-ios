@@ -7,6 +7,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     private var currentQuestionIndex: Int = 0
     private var correctAnswers: Int = 0
     private var statisticService: StatisticService?
+    private let presenter = MovieQuizPresenter()
     
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
 //        print("Я нажата: ДА")
@@ -105,12 +106,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     }
     
 
-    private func convert(model: QuizQuestion) -> QuizStepViewModel {
-        return QuizStepViewModel(
-            image: UIImage(data: model.image) ?? UIImage(),
-            question: model.text,
-            questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)")
-    }
+//    private func convert(model: QuizQuestion) -> QuizStepViewModel {
+//        return QuizStepViewModel(
+//            image: UIImage(data: model.image) ?? UIImage(),
+//            question: model.text,
+//            questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)")
+//    }
     
     
     private func showAnswerResult(isCorrect: Bool) {
@@ -160,7 +161,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
             return
         }
         currentQuestion = question
-        let viewModel = convert(model: question)
+        let viewModel = presenter.convert(model: question)
         DispatchQueue.main.async { [weak self] in
             self?.show(quiz: viewModel)
         }
