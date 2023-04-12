@@ -1,10 +1,8 @@
 import UIKit
 
 final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate   {
-    private let questionsAmount: Int = 10
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
-    private var currentQuestionIndex: Int = 0
     private var correctAnswers: Int = 0
     private var statisticService: StatisticService?
     private let presenter = MovieQuizPresenter()
@@ -75,7 +73,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
                                    message: message,
                                    buttonText: "Попробовать ещё раз") {[weak self] in
             guard let self = self else { return }
-            self.currentQuestionIndex = 0
+            self.presenter.resetQuestionIndex()
             self.correctAnswers = 0
             self.questionFactory?.loadData()
         }
@@ -93,7 +91,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
 
     private func show(quiz result: QuizResultsViewModel) {
         let action =  {
-            self.currentQuestionIndex = 0
+            self.presenter.resetQuestionIndex()
             self.correctAnswers = 0
             self.imageView.layer.borderWidth = 0
             self.questionFactory?.requestNextQuestion()
@@ -132,10 +130,10 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     }
     
     private func showNextQuestionOrResults() {
-        if currentQuestionIndex == questionsAmount - 1 {
-            statisticService!.store(correct: correctAnswers, total: questionsAmount)
+        if presenter.isLastQuestion() {
+            statisticService!.store(correct: correctAnswers, total: presenter.questionsAmount)
             
-            let text = "Ваш результат:\(correctAnswers)/\(questionsAmount)\nКоличество сыгранных квизов:\(statisticService!.gamesCount)\nРекорд: \(statisticService!.bestGame.correct)/\(statisticService!.bestGame.total) (\(statisticService!.bestGame.date.dateTimeString))\nСредняя точность: \(String(format: "%.2f%%", 100*statisticService!.totalAccuracy))"
+            let text = "Ваш результат:\(correctAnswers)/\(presenter.questionsAmount)\nКоличество сыгранных квизов:\(statisticService!.gamesCount)\nРекорд: \(statisticService!.bestGame.correct)/\(statisticService!.bestGame.total) (\(statisticService!.bestGame.date.dateTimeString))\nСредняя точность: \(String(format: "%.2f%%", 100*statisticService!.totalAccuracy))"
             
 //            let text = StatisticServiceImplementation().store(correct: correctAnswers, total: questionsAmount)
 //            correctAnswers == questionsAmount ?
@@ -143,7 +141,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
 //                    "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
             self.show(quiz: QuizResultsViewModel(title: "Результаты", text: text, buttonText: "Сыграть ещё раз"))
       } else {
-        currentQuestionIndex += 1 // увеличиваем индекс текущего урока на 1; таким образом мы сможем получить следующий урок
+          presenter.switchToNextQuestion() // увеличиваем индекс текущего урока на 1; таким образом мы сможем получить следующий урок
           
         // показать следующий вопрос
           self.questionFactory?.requestNextQuestion()
@@ -156,7 +154,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
 
     
     // MARK: - QuestionFactoryDelegate
-    func didReceiveNextQuestion(question: QuizQuestion?) {
+    func didRecieveNextQuestion(question: QuizQuestion?) {
         guard let question = question else {
             return
         }
