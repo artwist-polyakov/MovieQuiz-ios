@@ -3,16 +3,16 @@ import UIKit
 final class MovieQuizViewController: UIViewController   {
     private var presenter: MovieQuizPresenter!
     
+    //MARK: - Actions
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
-//        presenter.currentQuestion = currentQuestion
         presenter.yesButtonClicked()
     }
     
     @IBAction private func noButtonClicked(_ sender: UIButton) {
-//        presenter.currentQuestion = currentQuestion
         presenter.noButtonClicked()
     }
     
+    //MARK: - Outlets
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private weak var yesButton: UIButton!
     @IBOutlet private weak var noButton: UIButton!
@@ -76,33 +76,11 @@ final class MovieQuizViewController: UIViewController   {
     }
     
 
-    // MARK: - Views
+    // MARK: - Screen
     func show(quiz step: QuizStepViewModel) {
         imageView.image = step.image
         textLabel.text = step.question
         counterLabel.text = step.questionNumber
-      // здесь мы заполняем нашу картинку, текст и счётчик данными
     }
-    
-//
-//    func showAnswerResult(isCorrect: Bool) {
-//        self.presenter.correctAnswers += isCorrect ? 1 : 0
-//        imageView.layer.masksToBounds = true // даём разрешение на рисование рамки
-//        imageView.layer.borderWidth = 8 // толщина рамки
-//        imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
-//        imageView.layer.cornerRadius = 20 // радиус скругления углов рамки
-//        makeButtonsInactive()
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {[weak self] in
-////            self.imageView.layer.masksToBounds = false
-////            self.imageView.layer.borderWidth = 0
-//            guard let self = self else { return }
-//            self.imageView.layer.borderColor = UIColor.clear.cgColor
-////            self.presenter.questionFactory = self.questionFactory
-//            self.makeButtonsActive()
-//            self.presenter.showNextQuestionOrResults()
-//        }
-//    }
-    
-    
 }
 

@@ -10,12 +10,12 @@ import UIKit
 final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     private let statisticService: StatisticService!
-    var questionFactory: QuestionFactoryProtocol?
-    weak var viewController: MovieQuizViewController?
+    private var questionFactory: QuestionFactoryProtocol?
+    private weak var viewController: MovieQuizViewController?
     
-    let questionsAmount: Int = 10
+    private let questionsAmount: Int = 10
     private var currentQuestionIndex: Int = 0
-    var currentQuestion: QuizQuestion?
+    private var currentQuestion: QuizQuestion?
     var correctAnswers: Int = 0
     
     init(viewController: MovieQuizViewController) {
@@ -130,20 +130,15 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             return resultMessage
         }
     
-    func proceedToNextQuestionOrResults() {
+    private func proceedToNextQuestionOrResults() {
         if self.isLastQuestion() {
             
             let text = self.makeResultsMessage()
             
-//            let text = StatisticServiceImplementation().store(correct: correctAnswers, total: questionsAmount)
-//            correctAnswers == questionsAmount ?
-//                    "Поздравляем, Вы ответили на 10 из 10!" :
-//                    "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
             self.show(quiz: QuizResultsViewModel(title: "Результаты", text: text, buttonText: "Сыграть ещё раз"))
       } else {
-          self.switchToNextQuestion() // увеличиваем индекс текущего урока на 1; таким образом мы сможем получить следующий урок
+          self.switchToNextQuestion()
           
-        // показать следующий вопрос
           questionFactory?.requestNextQuestion()
           viewController?.turnOffHighlighting()
           viewController?.makeButtonsActive()
@@ -166,7 +161,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     }
     
     
-    func proceedWithAnswer(isCorrect: Bool) {
+    private func proceedWithAnswer(isCorrect: Bool) {
         correctAnswers += isCorrect ? 1 : 0
         viewController?.highlightImageBorder(isCorrectAnswer: isCorrect)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {[weak self] in
