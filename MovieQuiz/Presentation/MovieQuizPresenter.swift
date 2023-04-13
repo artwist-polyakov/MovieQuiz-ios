@@ -100,7 +100,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             return
         }
         let givenAnswer = isYes
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+        proceedWithAnswer(isCorrect: givenAnswer == currentQuestion.correctAnswer)
     }
     
     func yesButtonClicked() {
@@ -130,7 +130,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             return resultMessage
         }
     
-    func showNextQuestionOrResults() {
+    func proceedToNextQuestionOrResults() {
         if self.isLastQuestion() {
             
             let text = self.makeResultsMessage()
@@ -145,6 +145,8 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
           
         // показать следующий вопрос
           questionFactory?.requestNextQuestion()
+          viewController?.turnOffHighlighting()
+          viewController?.makeButtonsActive()
       }
     }
     
@@ -163,15 +165,14 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     }
     
     
-    func showAnswerResult(isCorrect: Bool) {
+    func proceedWithAnswer(isCorrect: Bool) {
         correctAnswers += isCorrect ? 1 : 0
         viewController?.highlightImageBorder(isCorrectAnswer: isCorrect)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {[weak self] in
 //            self.imageView.layer.masksToBounds = false
 //            self.imageView.layer.borderWidth = 0
             guard let self = self else { return }
-            viewController?.makeButtonsActive()
-            self.showNextQuestionOrResults()
+            self.proceedToNextQuestionOrResults()
         }
     }
 

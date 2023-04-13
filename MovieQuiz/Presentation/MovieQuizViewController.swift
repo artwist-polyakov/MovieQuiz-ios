@@ -58,6 +58,10 @@ final class MovieQuizViewController: UIViewController   {
         makeButtonsInactive()
     }
     
+    func turnOffHighlighting() {
+        imageView.layer.borderWidth = 0
+    }
+    
     
     // MARK: - Alerts and Errors
     func showNetworkError(message: String) {
