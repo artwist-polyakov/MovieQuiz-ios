@@ -77,23 +77,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
             self.presenter.resetGame()
             
         }
-//        let alert = UIAlertController(title: "Ошибка",
-//                                        message: message,
-//                                      preferredStyle: .alert)
-//        let action = UIAlertAction(title: "Попробовать еще раз",
-//                                   style: .default) {[weak self] _ in
-//            guard let self = self else { return }
-//            self.presenter.resetGame()
-//        }
-        
-//        let model = AlertPresenter(title: "Ошибка",
-//                                   message: message,
-//                                   buttonText: "Попробовать ещё раз") {[weak self] in
-//            guard let self = self else { return }
-//            self.presenter.resetGame()
-//            self.presenter.correctAnswers = 0
-//        }
-//        model.show(viewController: self)
+        self.showAlert(model: alertModel)
     }
     
 
