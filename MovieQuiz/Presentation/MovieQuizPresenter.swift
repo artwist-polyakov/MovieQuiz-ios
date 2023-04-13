@@ -39,22 +39,22 @@ final class MovieQuizPresenter{
         currentQuestionIndex += 1
     }
     
-    func yesButtonClicked() {
-//        print("Я нажата: ДА")
+    private func didAnswer(isYes:Bool) {
         guard let currentQuestion = currentQuestion else {
             return
         }
-        let givenAnswer = true
+        let givenAnswer = isYes
         viewController?.showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+    }
+    
+    func yesButtonClicked() {
+//        print("Я нажата: ДА")
+        didAnswer(isYes: true)
     }
     
     func noButtonClicked() {
 //        print("Я нажата: НЕТ")
-        guard let currentQuestion = currentQuestion else {
-            return
-        }
-        let givenAnswer = false
-        viewController?.showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+        didAnswer(isYes: false)
     }
     
 }
