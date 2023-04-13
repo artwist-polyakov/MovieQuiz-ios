@@ -10,6 +10,9 @@ import UIKit
 final class MovieQuizPresenter{
     let questionsAmount: Int = 10
     private var currentQuestionIndex: Int = 0
+    var currentQuestion: QuizQuestion?
+    weak var viewController: MovieQuizViewController?
+    
     // В Presenter вместо того, чтобы открыть доступ к свойству
     // currentQuestionIndex (то есть заменить private на internal),
     // мы добавили методы isLastQuestion(), resetQuestionIndex() и
@@ -35,4 +38,23 @@ final class MovieQuizPresenter{
     func switchToNextQuestion() {
         currentQuestionIndex += 1
     }
+    
+    func yesButtonClicked() {
+//        print("Я нажата: ДА")
+        guard let currentQuestion = currentQuestion else {
+            return
+        }
+        let givenAnswer = true
+        viewController?.showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+    }
+    
+    func noButtonClicked() {
+//        print("Я нажата: НЕТ")
+        guard let currentQuestion = currentQuestion else {
+            return
+        }
+        let givenAnswer = false
+        viewController?.showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+    }
+    
 }

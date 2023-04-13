@@ -8,21 +8,13 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     private let presenter = MovieQuizPresenter()
     
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
-//        print("Я нажата: ДА")
-        guard let currentQuestion = currentQuestion else {
-            return
-        }
-        let givenAnswer = true
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+        presenter.currentQuestion = currentQuestion
+        presenter.yesButtonClicked()
     }
     
     @IBAction private func noButtonClicked(_ sender: UIButton) {
-//        print("Я нажата: НЕТ")
-        guard let currentQuestion = currentQuestion else {
-            return
-        }
-        let givenAnswer = false
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+        presenter.currentQuestion = currentQuestion
+        presenter.noButtonClicked()
     }
     
     @IBOutlet private var activityIndicator: UIActivityIndicatorView!
@@ -35,6 +27,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.viewController = self
         activityIndicator.startAnimating()
         imageView.layer.cornerRadius = 20
         statisticService = StatisticServiceImplementation()
@@ -112,7 +105,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
 //    }
     
     
-    private func showAnswerResult(isCorrect: Bool) {
+    func showAnswerResult(isCorrect: Bool) {
         correctAnswers += isCorrect ? 1 : 0
         imageView.layer.masksToBounds = true // даём разрешение на рисование рамки
         imageView.layer.borderWidth = 8 // толщина рамки
