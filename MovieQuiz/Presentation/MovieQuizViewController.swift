@@ -2,6 +2,7 @@ import UIKit
 
 final class MovieQuizViewController: UIViewController, MovieQuizViewControllerProtocol   {
     private var presenter: MovieQuizPresenter!
+    let alertPresenter = AlertPresenter()
     
     //MARK: - Actions
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
@@ -64,15 +65,35 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     
     
     // MARK: - Alerts and Errors
+    func showAlert(model: AlertModel){
+        alertPresenter.show(in: self, model: model)
+    }
+    
+    
     func showNetworkError(message: String) {
-        let model = AlertPresenter(title: "Ошибка",
-                                   message: message,
-                                   buttonText: "Попробовать ещё раз") {[weak self] in
+        activityIndicator.isHidden = true
+        let alertModel = AlertModel(title: "Ошибка", message: message, buttonText: "Попробовать еще раз") {[weak self] in
             guard let self = self else { return }
             self.presenter.resetGame()
-            self.presenter.correctAnswers = 0
+            
         }
-        model.show(viewController: self)
+//        let alert = UIAlertController(title: "Ошибка",
+//                                        message: message,
+//                                      preferredStyle: .alert)
+//        let action = UIAlertAction(title: "Попробовать еще раз",
+//                                   style: .default) {[weak self] _ in
+//            guard let self = self else { return }
+//            self.presenter.resetGame()
+//        }
+        
+//        let model = AlertPresenter(title: "Ошибка",
+//                                   message: message,
+//                                   buttonText: "Попробовать ещё раз") {[weak self] in
+//            guard let self = self else { return }
+//            self.presenter.resetGame()
+//            self.presenter.correctAnswers = 0
+//        }
+//        model.show(viewController: self)
     }
     
 

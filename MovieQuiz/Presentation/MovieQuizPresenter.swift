@@ -12,6 +12,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     private let statisticService: StatisticService!
     private var questionFactory: QuestionFactoryProtocol?
     private weak var viewController: MovieQuizViewControllerProtocol?
+    private let alertPresenter = AlertPresenter()
     
     private let questionsAmount: Int = 10
     private var currentQuestionIndex: Int = 0
@@ -41,11 +42,28 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     }
     
     func didFailToLoadImage() {
-        let alert: AlertPresenter = AlertPresenter(title: "Ошибка", message: "Картинка не загружена",
-                                                   buttonText: "Попробовать ещё раз") {[weak self] in
-            self?.questionFactory?.requestNextQuestion()
+        let model = AlertModel(title: "Ошибка", message:  "Картинка не загружена", buttonText: "Попробовать еще раз") {[weak self] in
+            guard let self = self else { return }
+            self.questionFactory?.requestNextQuestion()
+            
         }
-        alert.show(viewController: viewController! as! UIViewController)
+        self.viewController?.showAlert(model: model)
+//
+//
+//        let alert = UIAlertController(title: "Ошибка",
+//                                        message: "Картинка не загружена",
+//                                      preferredStyle: .alert)
+//        let action = UIAlertAction(title: "Попробовать еще раз",
+//                                   style: .default) {[weak self] _ in
+//            guard let self = self else { return }
+//            self.questionFactory?.requestNextQuestion()
+//        }
+        
+//        let alert: AlertPresenter = AlertPresenter(title: "Ошибка", message: "Картинка не загружена",
+//                                                   buttonText: "Попробовать ещё раз") {[weak self] in
+//            self?.questionFactory?.requestNextQuestion()
+//        }
+//        alert.show(viewController: viewController! as! UIViewController)
     }
     
     func showLoadingIndicator() {
@@ -89,6 +107,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     func resetGame() {
         currentQuestionIndex = 0
+        correctAnswers = 0
     }
     
     func switchToNextQuestion() {
@@ -146,18 +165,44 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     }
     
     private func show(quiz result: QuizResultsViewModel) {
-        let action =  {
+//        let action =  {
+//            self.resetGame()
+//            self.correctAnswers = 0
+//            self.viewController?.imageView.layer.borderWidth = 0
+//            self.questionFactory?.requestNextQuestion()
+//            self.viewController?.makeButtonsActive()
+//            }
+        
+      // здесь мы показываем результат прохождения квиза
+        let model = AlertModel(title: result.title, message: result.text, buttonText: result.buttonText) {[weak self] in
+            guard let self = self else { return }
             self.resetGame()
             self.correctAnswers = 0
             self.viewController?.imageView.layer.borderWidth = 0
             self.questionFactory?.requestNextQuestion()
             self.viewController?.makeButtonsActive()
-            }
+            
+        }
+        self.viewController?.showAlert(model: model)
+//        let alert = UIAlertController(title: result.title,
+//                                      message: result.text,
+//                                              preferredStyle: .alert)
+//        let action = UIAlertAction(title: result.buttonText,
+//                                           style: .default ) {[weak self] _ in
+//                    guard let self = self else { return }
+//                    self.resetGame()
+//                    self.correctAnswers = 0
+//                    self.viewController?.imageView.layer.borderWidth = 0
+//                    self.questionFactory?.requestNextQuestion()
+//                    self.viewController?.makeButtonsActive()
+//                        }
         
-      // здесь мы показываем результат прохождения квиза
-        let alert: AlertPresenter = AlertPresenter(title: result.title, message: result.text,
-                                                   buttonText: result.buttonText, completion: action)
-        alert.show(viewController: viewController! as! UIViewController)
+        
+        
+        
+//        let alert: AlertPresenter = AlertPresenter(title: result.title, message: result.text,
+//                                                   buttonText: result.buttonText, completion: action)
+//        alert.show(viewController: viewController! as! UIViewController)
     }
     
     

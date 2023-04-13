@@ -2,6 +2,10 @@ import XCTest
 @testable import MovieQuiz
 
 final class MovieQuizViewControllerMock: MovieQuizViewControllerProtocol {
+    func showAlert(model: MovieQuiz.AlertModel) {
+        
+    }
+    
     var activityIndicator: UIActivityIndicatorView!
     
     var imageView: UIImageView!

@@ -19,5 +19,7 @@ protocol MovieQuizViewControllerProtocol: AnyObject {
     func highlightImageBorder(isCorrectAnswer:Bool)
     func turnOffHighlighting()
     
+    func showAlert(model:AlertModel)
     func showNetworkError(message: String)
+    
 }
