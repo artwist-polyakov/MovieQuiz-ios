@@ -12,6 +12,8 @@ final class MovieQuizPresenter{
     private var currentQuestionIndex: Int = 0
     var currentQuestion: QuizQuestion?
     weak var viewController: MovieQuizViewController?
+    var correctAnswers: Int = 0
+    var questionFactory: QuestionFactoryProtocol?
     
     // В Presenter вместо того, чтобы открыть доступ к свойству
     // currentQuestionIndex (то есть заменить private на internal),
@@ -55,6 +57,54 @@ final class MovieQuizPresenter{
     func noButtonClicked() {
 //        print("Я нажата: НЕТ")
         didAnswer(isYes: false)
+    }
+    
+    func didRecieveNextQuestion(question: QuizQuestion?) {
+        guard let question = question else {
+            return
+        }
+        currentQuestion = question
+        let viewModel = convert(model: question)
+        DispatchQueue.main.async { [weak self] in
+            self?.viewController?.show(quiz: viewModel)
+        }
+        viewController?.hideLoadingIndicator()
+    }
+    
+    
+    func showNextQuestionOrResults() {
+        let statisticService = self.viewController?.statisticService
+        
+        if self.isLastQuestion() {
+            statisticService!.store(correct: correctAnswers, total: self.questionsAmount)
+            
+            let text = "Ваш результат:\(correctAnswers)/\(self.questionsAmount)\nКоличество сыгранных квизов:\(statisticService!.gamesCount)\nРекорд: \(statisticService!.bestGame.correct)/\(statisticService!.bestGame.total) (\(statisticService!.bestGame.date.dateTimeString))\nСредняя точность: \(String(format: "%.2f%%", 100*statisticService!.totalAccuracy))"
+            
+//            let text = StatisticServiceImplementation().store(correct: correctAnswers, total: questionsAmount)
+//            correctAnswers == questionsAmount ?
+//                    "Поздравляем, Вы ответили на 10 из 10!" :
+//                    "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
+            self.show(quiz: QuizResultsViewModel(title: "Результаты", text: text, buttonText: "Сыграть ещё раз"))
+      } else {
+          self.switchToNextQuestion() // увеличиваем индекс текущего урока на 1; таким образом мы сможем получить следующий урок
+          
+        // показать следующий вопрос
+          questionFactory?.requestNextQuestion()
+      }
+    }
+    
+    private func show(quiz result: QuizResultsViewModel) {
+        let action =  {
+            self.resetQuestionIndex()
+            self.correctAnswers = 0
+            self.viewController?.imageView.layer.borderWidth = 0
+            self.questionFactory?.requestNextQuestion()
+            }
+        
+      // здесь мы показываем результат прохождения квиза
+        let alert: AlertPresenter = AlertPresenter(title: result.title, message: result.text,
+                                                   buttonText: result.buttonText, completion: action)
+        alert.show(viewController: viewController!)
     }
     
 }
