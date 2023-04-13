@@ -3,7 +3,6 @@ import UIKit
 final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate   {
     private var questionFactory: QuestionFactoryProtocol?
 //    private var currentQuestion: QuizQuestion?
-    private var correctAnswers: Int = 0
     var statisticService: StatisticService?
     private let presenter = MovieQuizPresenter()
     
@@ -66,8 +65,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
                                    message: message,
                                    buttonText: "Попробовать ещё раз") {[weak self] in
             guard let self = self else { return }
-            self.presenter.resetQuestionIndex()
-            self.correctAnswers = 0
+            self.presenter.resetGame()
+            self.presenter.correctAnswers = 0
             self.questionFactory?.loadData()
         }
         model.show(viewController: self)
@@ -106,7 +105,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     
     
     func showAnswerResult(isCorrect: Bool) {
-        correctAnswers += isCorrect ? 1 : 0
+        presenter.correctAnswers += isCorrect ? 1 : 0
         imageView.layer.masksToBounds = true // даём разрешение на рисование рамки
         imageView.layer.borderWidth = 8 // толщина рамки
         imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
@@ -117,7 +116,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
 //            self.imageView.layer.borderWidth = 0
             guard let self = self else { return }
             self.imageView.layer.borderColor = UIColor.clear.cgColor
-            self.presenter.correctAnswers = self.correctAnswers
             self.presenter.questionFactory = self.questionFactory
             self.makeButtonsActive()
             presenter.showNextQuestionOrResults()

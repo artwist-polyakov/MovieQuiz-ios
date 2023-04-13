@@ -33,7 +33,7 @@ final class MovieQuizPresenter{
         currentQuestionIndex == questionsAmount - 1
     }
     
-    func resetQuestionIndex() {
+    func resetGame() {
         currentQuestionIndex = 0
     }
     
@@ -95,7 +95,7 @@ final class MovieQuizPresenter{
     
     private func show(quiz result: QuizResultsViewModel) {
         let action =  {
-            self.resetQuestionIndex()
+            self.resetGame()
             self.correctAnswers = 0
             self.viewController?.imageView.layer.borderWidth = 0
             self.questionFactory?.requestNextQuestion()
