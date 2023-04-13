@@ -7,13 +7,64 @@
 
 import UIKit
 
-final class MovieQuizPresenter{
+final class MovieQuizPresenter: QuestionFactoryDelegate {
+    
+
+    
     let questionsAmount: Int = 10
     private var currentQuestionIndex: Int = 0
     var currentQuestion: QuizQuestion?
     weak var viewController: MovieQuizViewController?
     var correctAnswers: Int = 0
     var questionFactory: QuestionFactoryProtocol?
+    
+    init(viewController: MovieQuizViewController) {
+        self.viewController = viewController
+        questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
+        questionFactory?.loadData()
+        viewController.showLoadingIndicator()
+    }
+    
+    // MARK: - QuestionFactoryDelegete
+    
+    func didLoadDataFromServer() {
+        viewController?.hideLoadingIndicator()
+        questionFactory?.requestNextQuestion() 
+    }
+    
+    func didFailToLoadData(with error: Error) {
+        let message = error.localizedDescription
+        viewController?.showNetworkError(message: message)
+    }
+    
+    func didFailToLoadImage() {
+        let alert: AlertPresenter = AlertPresenter(title: "Ошибка", message: "Картинка не загружена",
+                                                   buttonText: "Попробовать ещё раз") {[weak self] in
+            self?.questionFactory?.requestNextQuestion()
+        }
+        alert.show(viewController: viewController!)
+    }
+    
+    func showLoadingIndicator() {
+        viewController?.activityIndicator.isHidden = false
+    }
+    
+    func hideLoadingIndicator() {
+        viewController?.activityIndicator.isHidden = true
+    }
+    
+    func didRecieveNextQuestion(question: QuizQuestion?) {
+        guard let question = question else {
+            return
+        }
+        currentQuestion = question
+        let viewModel = convert(model: question)
+        DispatchQueue.main.async { [weak self] in
+            self?.viewController?.show(quiz: viewModel)
+        }
+        viewController?.hideLoadingIndicator()
+    }
+    
     
     // В Presenter вместо того, чтобы открыть доступ к свойству
     // currentQuestionIndex (то есть заменить private на internal),
@@ -59,17 +110,7 @@ final class MovieQuizPresenter{
         didAnswer(isYes: false)
     }
     
-    func didRecieveNextQuestion(question: QuizQuestion?) {
-        guard let question = question else {
-            return
-        }
-        currentQuestion = question
-        let viewModel = convert(model: question)
-        DispatchQueue.main.async { [weak self] in
-            self?.viewController?.show(quiz: viewModel)
-        }
-        viewController?.hideLoadingIndicator()
-    }
+    
     
     
     func showNextQuestionOrResults() {

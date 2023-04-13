@@ -1,10 +1,8 @@
 import UIKit
 
-final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate   {
-    private var questionFactory: QuestionFactoryProtocol?
-//    private var currentQuestion: QuizQuestion?
+final class MovieQuizViewController: UIViewController   {
     var statisticService: StatisticService?
-    private let presenter = MovieQuizPresenter()
+    private var presenter: MovieQuizPresenter!
     
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
 //        presenter.currentQuestion = currentQuestion
@@ -16,7 +14,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
         presenter.noButtonClicked()
     }
     
-    @IBOutlet private var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private weak var yesButton: UIButton!
     @IBOutlet private weak var noButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
@@ -26,12 +24,10 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter.viewController = self
+        presenter = MovieQuizPresenter(viewController: self)
         activityIndicator.startAnimating()
         imageView.layer.cornerRadius = 20
         statisticService = StatisticServiceImplementation()
-        questionFactory = QuestionFactory(moviesLoader: MoviesLoader() ,delegate: self)
-        questionFactory?.loadData()
         
     }
     
@@ -60,14 +56,13 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     
     
     // MARK: - Alerts and Errors
-    private func showNetworkError(message: String) {
+    func showNetworkError(message: String) {
         let model = AlertPresenter(title: "Ошибка",
                                    message: message,
                                    buttonText: "Попробовать ещё раз") {[weak self] in
             guard let self = self else { return }
             self.presenter.resetGame()
             self.presenter.correctAnswers = 0
-            self.questionFactory?.loadData()
         }
         model.show(viewController: self)
     }
@@ -105,7 +100,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     
     
     func showAnswerResult(isCorrect: Bool) {
-        presenter.correctAnswers += isCorrect ? 1 : 0
+        self.presenter.correctAnswers += isCorrect ? 1 : 0
         imageView.layer.masksToBounds = true // даём разрешение на рисование рамки
         imageView.layer.borderWidth = 8 // толщина рамки
         imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
@@ -116,9 +111,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
 //            self.imageView.layer.borderWidth = 0
             guard let self = self else { return }
             self.imageView.layer.borderColor = UIColor.clear.cgColor
-            self.presenter.questionFactory = self.questionFactory
+//            self.presenter.questionFactory = self.questionFactory
             self.makeButtonsActive()
-            presenter.showNextQuestionOrResults()
+            self.presenter.showNextQuestionOrResults()
         }
     }
     
@@ -146,26 +141,26 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     
 
     
-    // MARK: - QuestionFactoryDelegate
-    func didRecieveNextQuestion(question: QuizQuestion?) {
-        presenter.didRecieveNextQuestion(question: question)
-    }
-    
-    func didLoadDataFromServer() {
-        questionFactory?.requestNextQuestion()
-    }
-
-    func didFailToLoadData(with error: Error) {
-        showNetworkError(message: error.localizedDescription)
-    }
-    
-    func didFailToLoadImage() {
-        let alert: AlertPresenter = AlertPresenter(title: "Ошибка", message: "Картинка не загружена",
-                                                   buttonText: "Попробовать ещё раз") {[weak self] in
-            self?.questionFactory?.requestNextQuestion()
-        }
-        alert.show(viewController: self)
-    }
+//    // MARK: - QuestionFactoryDelegate
+//    func didRecieveNextQuestion(question: QuizQuestion?) {
+//        presenter.didRecieveNextQuestion(question: question)
+//    }
+//
+//    func didLoadDataFromServer() {
+//        questionFactory?.requestNextQuestion()
+//    }
+//
+//    func didFailToLoadData(with error: Error) {
+//        showNetworkError(message: error.localizedDescription)
+//    }
+//
+//    func didFailToLoadImage() {
+//        let alert: AlertPresenter = AlertPresenter(title: "Ошибка", message: "Картинка не загружена",
+//                                                   buttonText: "Попробовать ещё раз") {[weak self] in
+//            self?.questionFactory?.requestNextQuestion()
+//        }
+//        alert.show(viewController: self)
+//    }
     
     
 }
