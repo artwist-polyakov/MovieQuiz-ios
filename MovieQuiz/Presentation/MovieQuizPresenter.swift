@@ -156,6 +156,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             self.correctAnswers = 0
             self.viewController?.imageView.layer.borderWidth = 0
             self.questionFactory?.requestNextQuestion()
+            self.viewController?.makeButtonsActive()
             }
         
       // здесь мы показываем результат прохождения квиза
