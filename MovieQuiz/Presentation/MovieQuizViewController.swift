@@ -1,6 +1,6 @@
 import UIKit
 
-final class MovieQuizViewController: UIViewController   {
+final class MovieQuizViewController: UIViewController, MovieQuizViewControllerProtocol   {
     private var presenter: MovieQuizPresenter!
     
     //MARK: - Actions
@@ -37,7 +37,7 @@ final class MovieQuizViewController: UIViewController   {
         activityIndicator.isHidden = true // говорим, что индикатор загрузки не скрыт
     }
     
-    private func makeButtonsInactive() {
+    func makeButtonsInactive() {
         yesButton.isEnabled = false
         noButton.isEnabled = false
         yesButton.setTitleColor(UIColor.ypGray, for: .normal)

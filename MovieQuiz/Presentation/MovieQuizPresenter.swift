@@ -11,14 +11,14 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     private let statisticService: StatisticService!
     private var questionFactory: QuestionFactoryProtocol?
-    private weak var viewController: MovieQuizViewController?
+    private weak var viewController: MovieQuizViewControllerProtocol?
     
     private let questionsAmount: Int = 10
     private var currentQuestionIndex: Int = 0
     private var currentQuestion: QuizQuestion?
     var correctAnswers: Int = 0
     
-    init(viewController: MovieQuizViewController) {
+    init(viewController: MovieQuizViewControllerProtocol) {
         self.viewController = viewController
         
         statisticService = StatisticServiceImplementation()
@@ -45,7 +45,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
                                                    buttonText: "Попробовать ещё раз") {[weak self] in
             self?.questionFactory?.requestNextQuestion()
         }
-        alert.show(viewController: viewController!)
+        alert.show(viewController: viewController! as! UIViewController)
     }
     
     func showLoadingIndicator() {
@@ -157,7 +157,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
       // здесь мы показываем результат прохождения квиза
         let alert: AlertPresenter = AlertPresenter(title: result.title, message: result.text,
                                                    buttonText: result.buttonText, completion: action)
-        alert.show(viewController: viewController!)
+        alert.show(viewController: viewController! as! UIViewController)
     }
     
     
