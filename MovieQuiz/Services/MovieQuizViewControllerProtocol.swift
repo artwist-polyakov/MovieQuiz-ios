@@ -8,8 +8,7 @@
 import UIKit
 
 protocol MovieQuizViewControllerProtocol: AnyObject {
-    var activityIndicator: UIActivityIndicatorView! { get set }
-    var imageView: UIImageView! { get set }
+
     func show(quiz step: QuizStepViewModel)
     
     func showLoadingIndicator()

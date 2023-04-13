@@ -14,10 +14,10 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     }
     
     //MARK: - Outlets
-    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private weak var yesButton: UIButton!
     @IBOutlet private weak var noButton: UIButton!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var textLabel: UILabel!
     @IBOutlet private weak var counterLabel: UILabel!
     
@@ -62,6 +62,8 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     func turnOffHighlighting() {
         imageView.layer.borderWidth = 0
     }
+    
+    
     
     
     // MARK: - Alerts and Errors

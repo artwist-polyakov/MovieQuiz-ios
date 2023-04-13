@@ -33,7 +33,6 @@ final class QuestionFactory:  QuestionFactoryProtocol {
     }
     // MARK: - func requestNextQuestion
     func requestNextQuestion() {
-        self.delegate?.showLoadingIndicator()
         DispatchQueue.global().async { [weak self] in
             guard let self = self else { return }
             let index = (0..<self.movies.count).randomElement() ?? 0

@@ -50,14 +50,6 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         self.viewController?.showAlert(model: model)
     }
     
-    func showLoadingIndicator() {
-        viewController?.activityIndicator.isHidden = false
-    }
-    
-    func hideLoadingIndicator() {
-        viewController?.activityIndicator.isHidden = true
-    }
-    
     func didRecieveNextQuestion(question: QuizQuestion?) {
         guard let question = question else {
             return
@@ -149,7 +141,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             guard let self = self else { return }
             self.resetGame()
             self.correctAnswers = 0
-            self.viewController?.imageView.layer.borderWidth = 0
+            self.viewController?.turnOffHighlighting()
             self.questionFactory?.requestNextQuestion()
             self.viewController?.makeButtonsActive()
             
@@ -162,6 +154,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         correctAnswers += isCorrect ? 1 : 0
         viewController?.highlightImageBorder(isCorrectAnswer: isCorrect)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {[weak self] in
+            
             guard let self = self else { return }
             self.proceedToNextQuestionOrResults()
         }
