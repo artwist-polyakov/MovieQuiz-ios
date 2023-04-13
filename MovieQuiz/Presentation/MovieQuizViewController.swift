@@ -26,7 +26,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
         super.viewDidLoad()
         presenter = MovieQuizPresenter(viewController: self)
         activityIndicator.startAnimating()
-        imageView.layer.cornerRadius = 20        
+        imageView.layer.cornerRadius = 20
     }
     
     // MARK: - UI
@@ -80,7 +80,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
         self.showAlert(model: alertModel)
     }
     
-
+    
     // MARK: - Screen
     func show(quiz step: QuizStepViewModel) {
         imageView.image = step.image

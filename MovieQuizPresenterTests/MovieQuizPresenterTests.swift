@@ -13,19 +13,16 @@ final class MovieQuizViewControllerMock: MovieQuizViewControllerProtocol {
     func turnOffHighlighting() {
     }
     
-    
     func show(quiz step: QuizStepViewModel) {
-    
+        
     }
     
-    
-    
     func highlightImageBorder(isCorrectAnswer: Bool) {
-    
+        
     }
     
     func showLoadingIndicator() {
-    
+        
     }
     func makeButtonsActive() {
         
@@ -35,11 +32,11 @@ final class MovieQuizViewControllerMock: MovieQuizViewControllerProtocol {
     }
     
     func hideLoadingIndicator() {
-    
+        
     }
     
     func showNetworkError(message: String) {
-    
+        
     }
 }
 

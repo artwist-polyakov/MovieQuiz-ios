@@ -77,7 +77,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)")
     }
     
-
+    
     
     func isLastQuestion() -> Bool {
         currentQuestionIndex == questionsAmount - 1
@@ -101,31 +101,31 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     }
     
     func yesButtonClicked() {
-//        print("Я нажата: ДА")
+        //        print("Я нажата: ДА")
         didAnswer(isYes: true)
     }
     
     func noButtonClicked() {
-//        print("Я нажата: НЕТ")
+        //        print("Я нажата: НЕТ")
         didAnswer(isYes: false)
     }
     
     
     func makeResultsMessage() -> String {
-            statisticService.store(correct: correctAnswers, total: questionsAmount)
-            
-            
-            let totalPlaysCountLine = "Количество сыгранных квизов:\(statisticService.gamesCount)"
-            let currentGameResultLine = "Ваш результат:\(correctAnswers)/\(questionsAmount)"
-            let bestGameInfoLine = "Рекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(statisticService.bestGame.date.dateTimeString))"
-            let averageAccuracyLine = "Средняя точность: \(String(format: "%.2f%%", 100*statisticService!.totalAccuracy))"
-            
-            let resultMessage = [
-                currentGameResultLine, totalPlaysCountLine, bestGameInfoLine, averageAccuracyLine
-            ].joined(separator: "\n")
-            
-            return resultMessage
-        }
+        statisticService.store(correct: correctAnswers, total: questionsAmount)
+        
+        
+        let totalPlaysCountLine = "Количество сыгранных квизов:\(statisticService.gamesCount)"
+        let currentGameResultLine = "Ваш результат:\(correctAnswers)/\(questionsAmount)"
+        let bestGameInfoLine = "Рекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(statisticService.bestGame.date.dateTimeString))"
+        let averageAccuracyLine = "Средняя точность: \(String(format: "%.2f%%", 100*statisticService!.totalAccuracy))"
+        
+        let resultMessage = [
+            currentGameResultLine, totalPlaysCountLine, bestGameInfoLine, averageAccuracyLine
+        ].joined(separator: "\n")
+        
+        return resultMessage
+    }
     
     private func proceedToNextQuestionOrResults() {
         if self.isLastQuestion() {
@@ -133,18 +133,18 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             let text = self.makeResultsMessage()
             
             self.show(quiz: QuizResultsViewModel(title: "Результаты", text: text, buttonText: "Сыграть ещё раз"))
-      } else {
-          self.switchToNextQuestion()
-          
-          questionFactory?.requestNextQuestion()
-          viewController?.turnOffHighlighting()
-          viewController?.makeButtonsActive()
-      }
+        } else {
+            self.switchToNextQuestion()
+            
+            questionFactory?.requestNextQuestion()
+            viewController?.turnOffHighlighting()
+            viewController?.makeButtonsActive()
+        }
     }
     
     private func show(quiz result: QuizResultsViewModel) {
         
-      // здесь мы показываем результат прохождения квиза
+        // здесь мы показываем результат прохождения квиза
         let model = AlertModel(title: result.title, message: result.text, buttonText: result.buttonText) {[weak self] in
             guard let self = self else { return }
             self.resetGame()
@@ -166,6 +166,6 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             self.proceedToNextQuestionOrResults()
         }
     }
-
+    
     
 }
